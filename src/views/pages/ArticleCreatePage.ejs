@@ -1,0 +1,78 @@
+<div id="article-detail-page" class="relative w-full h-[86vh] p-6 flex flex-col gap-6 overflow-auto">
+    <form id="editor-form" method="POST" action="/articles/create" class="flex flex-row justify-center items-center p-4 gap-4">
+        <div id="left-col" class="shadow-xl rounded-xl h-full w-1/2 p-4">
+            <select name="category_id" id="category_id">
+                <%categories.forEach((category) => {%>
+                    <option value="<%=category._id%>"><%=category.category_name%></option>
+                <%})%>
+
+            </select>
+            <!-- Title Field -->
+            <div class="form-group">
+                <label for="title" class="block text-lg font-semibold text-gray-700">Title</label>
+                <input type="text" id="title" name="title" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            
+            <!-- Author Field -->
+            <div class="form-group">
+                <label for="author" class="block text-lg font-semibold text-gray-700">Author</label>
+                <input type="text" id="author" name="author" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            
+            <!-- Abstract Field -->
+            <div class="form-group">
+                <label for="abstract" class="block text-lg font-semibold text-gray-700">Abstract</label>
+                <textarea id="abstract" name="abstract" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4" required></textarea>
+            </div>
+            
+            <!-- Premium Checkbox -->
+            <div class="form-group flex items-center space-x-2">
+                <label for="is_premium" class="text-lg font-semibold text-gray-700">Premium Article</label>
+                
+                <!-- Select Dropdown for Premium -->
+                <select id="is_premium" name="is_premium" class="h-10 w-32 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="1">Yes</option> <!-- Value for Premium -->
+                    <option value="0">No</option>  <!-- Value for Non-Premium -->
+                </select>
+            </div>
+             
+        </div>
+        <div id="right-col"  class="shadow-xl rounded-xl h-full w-1/2 p-4">
+            <div >
+                <div id="editor"></div>
+            </div>
+            <input type="hidden" name="content" id="editor-content" />
+            <!-- Submit Button -->
+            <button type="submit" class="w-full py-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Submit Article</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+<script>
+    let editorInstance;
+    ClassicEditor.create(document.querySelector("#editor"))
+      .then((editor) => {
+        editorInstance = editor;
+        console.log("Editor is ready", editor);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    document
+        .getElementById("editor-form")
+        .addEventListener("submit", function (event) {
+            const content = editorInstance.getData();
+            console.log(content)
+            if (!content) {
+                alert("Content is required");
+                event.preventDefault();
+            } else {
+                document.querySelector("#editor-content").value = content;
+            }
+        });
+</script>
+

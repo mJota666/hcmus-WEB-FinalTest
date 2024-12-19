@@ -1,0 +1,49 @@
+<div id="article-page" class="relative w-[100vw] h-[86vh] p-6 flex flex-col gap-6 overflow-auto">
+    <div class="shadow-lg rounded-lg mx-4 md:mx-10">
+        <table class="w-full table-fixed">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="w-1/12 py-4 px-6 text-left text-gray-600 font-bold uppercase">#</th>
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">Title</th>
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">Author</th>
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">Abstract</th>
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">Category</th>
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">Premium</th>
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">View</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <% articleList.forEach((article, index) => { %>
+                    <tr>
+                        <td class="py-4 px-6 border-b  border-gray-200"><%=index + 1%></td>    
+                        <td class="py-4 px-6 border-b  border-gray-200"><%=article.title%></td>    
+                        <td class="py-4 px-6 border-b  border-gray-200"><%=article.author%></td>    
+                        <td class="py-4 px-6 border-b  border-gray-200"><%=article.abstract%></td>    
+                        <td class="py-4 px-6 border-b  border-gray-200"><%=article.category_name%></td>    
+                        <td class="py-4 px-6 border-b  border-gray-200"><%=article.is_premium%></td>    
+                        <td class="py-4 px-6 border-b  border-gray-200"><a href="/articles/detail?id=<%=article._id%>" class="hover:underline">View</a></td>    
+
+                    </tr>
+                <% })%>
+            </tbody>
+        </table>
+    </div>
+    <div id="pag-nav-container" class="flex justify-center items-center">
+        <nav aria-label="Page navigation example">
+            <ul class="inline-flex -article-x-px text-base h-10">
+                <li>
+                <a href="/articles?page=<%=prevPage.page%>&limit=5" class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-black bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 ">Previous</a>
+                </li>
+                <%pagNodes.forEach((pagNode) => {%>
+                    <li>
+                    <a href="/articles?page=<%=pagNode.value%>&limit=5" class="flex items-center justify-center px-4 h-10 leading-tight text-black bg-white border border-gray-300 hover:bg-gray-300 hover:text-gray-700 <%if (pagNode.isActive) {%> bg-gray-700 text-white <%}%> "><%= pagNode.value%></a>
+
+                    </li>    
+                <%})%>
+                <li>
+                <a href="/articles?page=<%=nextPage.page%>&limit=5" class="flex items-center justify-center px-4 h-10 leading-tight text-black bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 ">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
